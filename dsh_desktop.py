@@ -4,6 +4,7 @@ DeepSeek Harness 桌面应用
 """
 import webview
 import sys
+import os
 import platform
 import urllib.request
 
@@ -30,6 +31,10 @@ def main():
             input("按回车键退出...")
         sys.exit(1)
 
+    # 获取图标路径
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    icon_path = os.path.join(base_dir, "assets", "icon.ico")
+
     window = webview.create_window(
         title="DeepSeek Harness",
         url=DSH_URL,
@@ -38,6 +43,7 @@ def main():
         min_size=(800, 600),
         resizable=True,
         text_select=True,
+        icon=icon_path if os.path.exists(icon_path) else None,
     )
 
     # macOS 用 cocoa，Windows 用 edgechromium，Linux 用 gtk
