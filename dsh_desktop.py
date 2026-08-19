@@ -43,7 +43,6 @@ def main():
         min_size=(800, 600),
         resizable=True,
         text_select=True,
-        icon=icon_path if os.path.exists(icon_path) else None,
     )
 
     # macOS 用 cocoa，Windows 用 edgechromium，Linux 用 gtk
@@ -54,7 +53,12 @@ def main():
     elif system == "Windows":
         gui = "edgechromium"
 
-    webview.start(gui=gui, debug=False)
+    # icon 参数传给 webview.start()，不是 create_window()
+    start_kwargs = {"gui": gui, "debug": False}
+    if os.path.exists(icon_path):
+        start_kwargs["icon"] = icon_path
+
+    webview.start(**start_kwargs)
 
 
 if __name__ == "__main__":
