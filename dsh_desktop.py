@@ -4,7 +4,6 @@ DeepSeek Harness 桌面应用
 """
 import webview
 import sys
-import os
 import platform
 import urllib.request
 import traceback
@@ -32,10 +31,6 @@ def main():
             input("按回车键退出...")
         sys.exit(1)
 
-    # 获取图标路径
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    icon_path = os.path.join(base_dir, "assets", "icon.ico")
-
     try:
         window = webview.create_window(
             title="DeepSeek Harness",
@@ -55,12 +50,7 @@ def main():
         elif system == "Windows":
             gui = "edgechromium"
 
-        # icon 参数传给 webview.start()，不是 create_window()
-        start_kwargs = {"gui": gui, "debug": False}
-        if os.path.exists(icon_path):
-            start_kwargs["icon"] = icon_path
-
-        webview.start(**start_kwargs)
+        webview.start(gui=gui, debug=False)
     except Exception as e:
         print("=" * 50)
         print("启动失败！错误信息：")
